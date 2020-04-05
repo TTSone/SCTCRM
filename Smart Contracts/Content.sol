@@ -8,7 +8,6 @@ contract Content {
     address public owner;
     Producer public producer;
     mapping (address => ReqInfo) public reqInfos;
-    mapping (address => uint) public reqId;
     address[] public reqAccts;
     uint public numofReqs;
     
@@ -72,13 +71,14 @@ contract Content {
        uint j=0;
         for (uint i = 0; i<reqAccts.length-1; i++){
             if(reqAccts[i]==_consumerAddr)
-            j=i;
-        }
-        if(j!=0){
-        delete reqAccts[j];
-        reqAccts.length--;
-        numofReqs--;
-        emit ReqRemoved(_consumerAddr);
+             for(j=i;j<reqAccts.length-1;j++){
+                    reqAccts[j]=reqAccts[j+1];
+                    
+                }
+                delete reqAccts[reqAccts.length-1];
+                reqAccts.length--;
+                numofReqs--;
+                emit ReqRemoved(_consumerAddr);
         }
     }
     

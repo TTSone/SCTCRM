@@ -103,8 +103,15 @@ contract Producer {
        return status;
     }
     
-    function strConcat(string _a, string _b) pure internal returns (string) {
-        return strConcat(_a, _b);
+     function strConcat(string _a, string _b) pure internal returns (string){
+        bytes memory _inputa = bytes(_a);
+        bytes memory _inputb = bytes(_b);
+        string memory ab = new string(_inputa.length + _inputb.length);
+        bytes memory constr = bytes(ab);
+        uint k = 0;
+        for (uint i = 0; i < _inputa.length; i++) constr[k++] = _inputa[i];
+        for (i = 0; i < _inputb.length; i++) constr[k++] = _inputb[i];
+        return string(constr);
     }
 
 }
